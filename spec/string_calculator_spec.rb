@@ -39,5 +39,15 @@ describe StringCalculator do
     it "ignores leading and trailing whitespaces" do
       expect(calculator.add(" 1, 2 ,3, 4")).to eq(10)
     end
+
+    it "uses provided delimiter" do
+      expect(calculator.add("//;\n1;2;3")).to eq(6)
+    end
+
+    it "allows special characters as delimiters" do
+      expect(calculator.add("//*\n1*2*3")).to eq(6)
+      expect(calculator.add("//.\n1.2.3")).to eq(6)
+      expect(calculator.add("//\\\n1\\2\\3")).to eq(6)
+    end
   end
 end
