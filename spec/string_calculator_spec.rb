@@ -49,5 +49,10 @@ describe StringCalculator do
       expect(calculator.add("//.\n1.2.3")).to eq(6)
       expect(calculator.add("//\\\n1\\2\\3")).to eq(6)
     end
+
+    it "raises error for negative numbers" do
+      expect { calculator.add("1,-2,3") }.to raise_error(ArgumentError, "Negative numbers not allowed: -2")
+      expect { calculator.add("//;\n1;-2;3;-4;-7") }.to raise_error(ArgumentError, "Negative numbers not allowed: -2, -4, -7")
+    end
   end
 end

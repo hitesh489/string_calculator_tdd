@@ -10,9 +10,12 @@ class StringCalculator
 
     nums = numbers.split(delimiter).map do |num|
       num = num.strip
-      raise ArgumentError, "Invalid input" unless num.match?(/^\d+$/)
+      raise ArgumentError, "Invalid input" unless num.match?(/^-?\d+$/)
       num.to_i
     end
+
+    negatives = nums.select { |num| num < 0 }
+    raise ArgumentError, "Negative numbers not allowed: #{negatives.join(', ')}" if negatives.any?
 
     nums.sum
   end
