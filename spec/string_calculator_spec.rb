@@ -54,5 +54,10 @@ describe StringCalculator do
       expect { calculator.add("1,-2,3") }.to raise_error(ArgumentError, "Negative numbers not allowed: -2")
       expect { calculator.add("//;\n1;-2;3;-4;-7") }.to raise_error(ArgumentError, "Negative numbers not allowed: -2, -4, -7")
     end
+
+    it "ignores numbers greater than 1000" do
+      expect(calculator.add("1001,2, 1000")).to eq(1002)
+      expect(calculator.add("//;\n1001;2;3")).to eq(5)
+    end
   end
 end
