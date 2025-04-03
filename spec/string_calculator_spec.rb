@@ -8,6 +8,14 @@ describe StringCalculator do
       expect(calculator.add("")).to eq(0)
     end
 
+    it "return 0 for a string with only spaces" do
+      expect(calculator.add("   ")).to eq(0)
+    end
+
+    it "return 0 for string with only newline characters" do
+      expect(calculator.add("\n\n\n")).to eq(0)
+    end
+
     it "returns the number for a single number" do
       expect(calculator.add("5")).to eq(5)
     end
