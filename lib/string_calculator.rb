@@ -6,10 +6,14 @@ class StringCalculator
 
     if numbers.start_with?("//")
       delimiter, numbers = numbers[2..].split("\n", 2)
-      delimiter = delimiter[1..-2] if delimiter.start_with?("[") && delimiter.end_with?("]")
+      if delimiter.start_with?("[") && delimiter.end_with?("]")
+        delimiter = delimiter[1..-2].split("][").map { |d| Regexp.escape(d) }.join("|")
+      else
+        delimiter = Regexp.escape(delimiter)
+      end
     end
 
-    nums = numbers.split(delimiter).map do |num|
+    nums = numbers.split(/#{delimiter}/).map do |num|
       num = num.strip
       raise ArgumentError, "Invalid input" unless num.match?(/^-?\d+$/)
       num.to_i

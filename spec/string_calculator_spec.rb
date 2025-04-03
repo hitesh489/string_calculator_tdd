@@ -63,5 +63,22 @@ describe StringCalculator do
     it "handles delimiter of any length" do
       expect(calculator.add("//[***]\n1***2***3")).to eq(6)
     end
+
+    it "handles multiple delimiters" do
+      expect(calculator.add("//[;][*]\n1;2*3")).to eq(6)
+      expect(calculator.add("//[;][*]\n1;2*3;4")).to eq(10)
+      expect(calculator.add("//[;][*][.]\n1;2*3;4.5")).to eq(15)
+      expect { calculator.add("//[;][*]\n1;2*3;4,5") }.to raise_error(ArgumentError, "Invalid input")
+    end
+
+    it "handles multiple delimiters of different lengths" do
+      expect(calculator.add("//[***][;;]\n1***2;;3")).to eq(6)
+      expect{ calculator.add("//[***][;;]\n1***2;;3;4") }.to raise_error(ArgumentError, "Invalid input")
+    end
+
+    it "raises error if delimiter is empty" do
+      expect { calculator.add("//\n1,2") }.to raise_error(ArgumentError, "Invalid input")
+      expect { calculator.add("//[]\n1,2") }.to raise_error(ArgumentError, "Invalid input")
+    end
   end
 end
