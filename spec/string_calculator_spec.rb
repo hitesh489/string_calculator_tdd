@@ -59,5 +59,9 @@ describe StringCalculator do
       expect(calculator.add("1001,2, 1000")).to eq(1002)
       expect(calculator.add("//;\n1001;2;3")).to eq(5)
     end
+
+    it "handles delimiter of any length" do
+      expect(calculator.add("//[***]\n1***2***3")).to eq(6)
+    end
   end
 end
